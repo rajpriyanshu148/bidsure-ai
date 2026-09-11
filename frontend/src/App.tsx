@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { AppLayout } from './layouts/AppLayout';
 import { DashboardPage } from './pages/DashboardPage';
 import { TendersPage } from './pages/TendersPage';
@@ -24,8 +25,9 @@ const ProtectedLayout: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <HashRouter>
+    <ThemeProvider>
+      <AuthProvider>
+        <HashRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
 
@@ -50,6 +52,7 @@ export const App: React.FC = () => {
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </HashRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };

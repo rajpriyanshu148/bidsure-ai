@@ -7,6 +7,70 @@
   color-scheme: light;
 }
 
+/* Universal Dark Mode Rules */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #0b1120;
+  color: #f1f5f9;
+}
+
+html.dark .bg-slate-100,
+html.dark .bg-bidsure-bg,
+html.dark .bg-gem-bg {
+  background-color: #0b1120 !important;
+}
+
+html.dark .bg-white {
+  background-color: #0f172a !important;
+  color: #f1f5f9;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #162032 !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-slate-300 {
+  border-color: #1e293b !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-600,
+html.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+html.dark table thead {
+  background-color: #162032 !important;
+}
+
+html.dark table tbody tr {
+  border-color: #1e293b !important;
+}
+
+html.dark table tbody tr:hover {
+  background-color: #1e293b !important;
+}
+
 /* Glassmorphism Design Tokens */
 .glass-subtle {
   background: rgba(255, 255, 255, 0.88);
@@ -22,6 +86,18 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(200, 210, 225, 0.9);
   box-shadow: 0 12px 36px -4px rgba(11, 37, 69, 0.09), 0 4px 12px -2px rgba(11, 37, 69, 0.05);
+}
+
+html.dark .glass-subtle {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(51, 65, 85, 0.6);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .glass-elevated {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(51, 65, 85, 0.8);
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.5);
 }
 
 .glass-intelligence {

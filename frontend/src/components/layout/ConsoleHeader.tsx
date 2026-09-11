@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Zap, Shield, ShieldCheck, ShieldAlert, Cpu } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { ThemeToggle } from '../../context/ThemeContext';
 import gemLogo from '../../assets/gem-logo.png';
 import bidsureArtwork from '../../assets/bidsure-artwork.png';
 
@@ -101,6 +102,9 @@ export const ConsoleHeader: React.FC = () => {
               <span className="text-xs font-bold text-white">{activePersona.fullName}</span>
             </div>
           </div>
+
+          {/* Theme Toggle (Light / Dark Mode) */}
+          <ThemeToggle />
 
           {/* Logout Button */}
           <button
