@@ -24,6 +24,9 @@ import {
   MOCK_VERIFICATIONS,
   MOCK_AUDIT_LOGS,
   MOCK_DASHBOARD_STATS,
+  MOCK_OFFICER_DASHBOARD,
+  MOCK_AUDITOR_DASHBOARD,
+  MOCK_ADMIN_DASHBOARD,
 } from './mockData';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
@@ -115,7 +118,7 @@ export const dashboardApi = {
         const res = await apiClient.get('/dashboard/officer');
         return res.data;
       },
-      MOCK_DASHBOARD_STATS
+      MOCK_OFFICER_DASHBOARD
     );
   },
   getAuditorStats: async (): Promise<any> => {
@@ -124,7 +127,7 @@ export const dashboardApi = {
         const res = await apiClient.get('/dashboard/auditor');
         return res.data;
       },
-      MOCK_DASHBOARD_STATS
+      MOCK_AUDITOR_DASHBOARD
     );
   },
   getAdminStats: async (): Promise<any> => {
@@ -133,7 +136,7 @@ export const dashboardApi = {
         const res = await apiClient.get('/dashboard/admin');
         return res.data;
       },
-      MOCK_DASHBOARD_STATS
+      MOCK_ADMIN_DASHBOARD
     );
   },
 };

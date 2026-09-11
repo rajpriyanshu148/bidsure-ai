@@ -3,14 +3,10 @@ import { Outlet } from 'react-router-dom';
 import { ConsoleHeader } from '../components/layout/ConsoleHeader';
 import { ConsoleSidebar } from '../components/layout/ConsoleSidebar';
 import { GovernmentDisclaimerBanner } from '../components/GovernmentDisclaimerBanner';
-import { AmbientBackground } from '../components/layout/AmbientBackground';
 
 export const AppLayout: React.FC = () => {
   return (
-    <div className="min-h-screen bg-bidsure-bg flex flex-col font-sans relative">
-      {/* Ambient background light */}
-      <AmbientBackground intensity="subtle" />
-
+    <div className="min-h-screen bg-slate-100 flex flex-col font-sans">
       {/* Top Header */}
       <ConsoleHeader />
 

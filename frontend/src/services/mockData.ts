@@ -1,4 +1,4 @@
-﻿import {
+import {
   User,
   Tender,
   Bidder,
@@ -567,4 +567,183 @@ export const MOCK_DASHBOARD_STATS: DashboardStats = {
   },
   recent_tenders: MOCK_TENDERS,
   high_risk_bidder_list: MOCK_BIDDERS.filter((b) => b.risk_level === 'HIGH'),
+};
+
+export const MOCK_OFFICER_DASHBOARD = {
+  stats: {
+    total_assigned: 3,
+    pending_action: 1,
+    clarifications_active: 1,
+    approved_count: 1,
+    rejected_count: 1,
+    evaluation_completion_pct: 66.7,
+  },
+  scrutiny_queue: [
+    {
+      id: 'bid_abc001',
+      company_name: 'ABC Engineering Pvt Ltd',
+      tender_id: 'tnd_demo_001',
+      compliance_score: 52,
+      risk_level: 'HIGH',
+      officer_decision_status: 'UNDER_REVIEW',
+      submitted_at: '2026-08-25T14:32:00Z',
+    },
+    {
+      id: 'bid_nbm002',
+      company_name: 'National Bharat Motors Ltd',
+      tender_id: 'tnd_demo_001',
+      compliance_score: 95,
+      risk_level: 'LOW',
+      officer_decision_status: 'APPROVED',
+      submitted_at: '2026-08-26T10:15:00Z',
+    },
+    {
+      id: 'bid_shi003',
+      company_name: 'Sunrise Heavy Infotech',
+      tender_id: 'tnd_demo_001',
+      compliance_score: 41,
+      risk_level: 'HIGH',
+      officer_decision_status: 'REJECTED',
+      submitted_at: '2026-08-27T16:45:00Z',
+    },
+  ],
+  active_tenders: [
+    {
+      id: 'tnd_demo_001',
+      tender_number: 'GEM/2026/B/DEMO001',
+      title: 'Industrial Heavy-Duty Centrifugal Pump Procurement',
+      category: 'Machinery & Equipment',
+      estimated_value: 450000000.0,
+      closing_date: '2026-10-15T18:00:00Z',
+      total_bidders: 3,
+      decided_bidders: 2,
+      evaluation_pct: 66.7,
+    },
+    {
+      id: 'tnd_demo_002',
+      tender_number: 'GEM/2026/B/DEMO002',
+      title: 'Hospital ICU Invasive Ventilator & Patient Monitor System',
+      category: 'Healthcare Devices',
+      estimated_value: 120000000.0,
+      closing_date: '2026-11-05T17:00:00Z',
+      total_bidders: 2,
+      decided_bidders: 1,
+      evaluation_pct: 50.0,
+    },
+    {
+      id: 'tnd_demo_003',
+      tender_number: 'GEM/2026/B/DEMO003',
+      title: 'Secure Cloud Infrastructure & Sovereign Compute Facility',
+      category: 'IT & Cloud Services',
+      estimated_value: 850000000.0,
+      closing_date: '2026-09-30T15:00:00Z',
+      total_bidders: 4,
+      decided_bidders: 4,
+      evaluation_pct: 100.0,
+    },
+  ],
+  critical_alerts: [
+    {
+      bidder_id: 'bid_abc001',
+      company_name: 'ABC Engineering Pvt Ltd',
+      compliance_score: 52,
+      risk_level: 'HIGH',
+      decision_status: 'UNDER_REVIEW',
+      reasons: [
+        'Annual Turnover (₹8.4 Cr) fails mandatory ₹10.0 Cr threshold (-16%)',
+        'OEM Manufacturer Authorization expired on 31-Dec-2025',
+      ],
+    },
+    {
+      bidder_id: 'bid_shi003',
+      company_name: 'Sunrise Heavy Infotech',
+      compliance_score: 41,
+      risk_level: 'HIGH',
+      decision_status: 'REJECTED',
+      reasons: [
+        'Debarment check match identified in CPPP blacklist repository',
+        'Missing statutory GST registration certificate',
+      ],
+    },
+  ],
+};
+
+export const MOCK_AUDITOR_DASHBOARD = {
+  integrity_kpis: {
+    integrity_score: 98.4,
+    total_audit_events: 12,
+    officer_overrides_count: 1,
+    debarment_violations_blocked: 1,
+    unauthorized_access_attempts: 0,
+    chain_of_custody_status: '100% CRYPTOGRAPHICALLY VERIFIED',
+  },
+  officer_overrides: [
+    {
+      id: 'ovr_01',
+      bidder_id: 'bid_abc001',
+      bidder_name: 'ABC Engineering Pvt Ltd',
+      risk_level: 'HIGH',
+      compliance_score: 52,
+      officer_name: 'Rajesh Kumar',
+      officer_decision: 'CLARIFICATION_REQUESTED',
+      justification: 'Requested clarification on valid OEM authorization certificate under GeM clause 4.12 within 48h window.',
+      decided_at: '2026-08-26T09:30:00Z',
+      override_type: 'High Risk Bidder granted clarification period',
+    },
+  ],
+  debarment_alerts: [
+    {
+      id: 'deb_01',
+      bidder_name: 'Sunrise Heavy Infotech',
+      pan: 'AABCS5432M',
+      authority: 'CPPP Central Watchlist',
+      debarred_until: '2027-03-31',
+      status: 'BLOCKED AUTOMATICALLY',
+    },
+  ],
+  recent_audit_trail: MOCK_AUDIT_LOGS,
+  statutory_rule_breakdown: [
+    { rule_name: 'Financial Turnover Rule', evaluated: 3, passed: 2, failed: 1 },
+    { rule_name: 'GSTN Registration Status', evaluated: 3, passed: 3, failed: 0 },
+    { rule_name: 'Make in India Local Content', evaluated: 3, passed: 2, failed: 1 },
+    { rule_name: 'OEM Manufacturer Authorization', evaluated: 3, passed: 1, failed: 2 },
+  ],
+};
+
+export const MOCK_ADMIN_DASHBOARD = {
+  system_health: {
+    backend_status: 'OPERATIONAL',
+    database_status: 'HEALTHY (SQLite WAL Mode)',
+    db_latency_ms: 1.4,
+    llm_provider: 'Deterministic Grounded Rule Extractor',
+    ocr_throughput: '1.2s / page',
+    ocr_accuracy_rate: 98.8,
+  },
+  gateways: [
+    { name: 'MCA-21 Corporate Registry', status: 'ONLINE', latency_ms: 42, uptime_pct: 99.98 },
+    { name: 'GSTN Gateway Interconnect', status: 'ONLINE', latency_ms: 68, uptime_pct: 99.95 },
+    { name: 'CPPP Central Debarment Watchlist', status: 'ONLINE', latency_ms: 31, uptime_pct: 100.0 },
+    { name: 'EPFO Shram Suvidha API', status: 'ONLINE', latency_ms: 55, uptime_pct: 99.91 },
+    { name: 'CBDT PAN Verification Engine', status: 'ONLINE', latency_ms: 29, uptime_pct: 99.99 },
+    { name: 'MSME Udyam Database', status: 'ONLINE', latency_ms: 48, uptime_pct: 99.94 },
+  ],
+  users: [
+    { id: 'u1', email: 'officer@bidsure.gov.in', full_name: 'Rajesh Kumar', role: 'PROCUREMENT_OFFICER', is_active: true },
+    { id: 'u2', email: 'auditor@bidsure.gov.in', full_name: 'Sanjay Singhal', role: 'AUDITOR', is_active: true },
+    { id: 'u3', email: 'admin@bidsure.gov.in', full_name: 'Dr. A. Sharma', role: 'ADMIN', is_active: true },
+  ],
+  pipeline_stats: {
+    total_documents: 7,
+    total_pages: 17,
+    active_tenders: 3,
+    total_bidders: 5,
+  },
+  default_weights: {
+    TURNOVER: 20,
+    GST: 15,
+    PAN: 10,
+    LOCAL_CONTENT: 20,
+    BLACKLISTING: 15,
+    OEM_AUTHORIZATION: 20,
+  },
 };
