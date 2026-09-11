@@ -95,7 +95,7 @@ export const LoginPage: React.FC = () => {
             {/* Role Selection */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide">
-                Select User Role (Demo Mode)
+                Select User Role
               </label>
               <div className="grid grid-cols-3 gap-2">
                 <button

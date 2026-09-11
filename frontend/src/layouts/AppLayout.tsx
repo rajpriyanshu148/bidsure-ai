@@ -2,16 +2,11 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { ConsoleHeader } from '../components/layout/ConsoleHeader';
 import { ConsoleSidebar } from '../components/layout/ConsoleSidebar';
-import { GovernmentDisclaimerBanner } from '../components/GovernmentDisclaimerBanner';
-
 export const AppLayout: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col font-sans">
       {/* Top Header */}
       <ConsoleHeader />
-
-      {/* Official Government Disclaimer Banner */}
-      <GovernmentDisclaimerBanner />
 
       {/* Body with Sidebar & Content */}
       <div className="flex flex-1 relative z-10">
