@@ -1,4 +1,4 @@
-﻿import axios from 'axios';
+import axios from 'axios';
 import {
   User,
   Tender,
@@ -45,8 +45,18 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
+const isHostedOnGitHubPages = typeof window !== 'undefined' && (
+  window.location.hostname.includes('github.io') ||
+  (window.location.protocol === 'https:' && !import.meta.env.VITE_API_BASE_URL)
+);
+
+export const isDemoMode = isHostedOnGitHubPages;
+
 // Fallback execution wrapper for resilient offline/GitHub Pages demo evaluation
 async function withFallback<T>(apiCall: () => Promise<T>, fallback: T | (() => T)): Promise<T> {
+  if (isHostedOnGitHubPages) {
+    return typeof fallback === 'function' ? (fallback as () => T)() : fallback;
+  }
   try {
     return await apiCall();
   } catch (err: any) {

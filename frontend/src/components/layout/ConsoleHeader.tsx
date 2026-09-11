@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Zap, Shield, ShieldCheck, ShieldAlert, Cpu } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import gemLogo from '../../assets/gem-logo.png';
+import bidsureArtwork from '../../assets/bidsure-artwork.png';
 
 export const ConsoleHeader: React.FC = () => {
   const navigate = useNavigate();
@@ -20,11 +22,10 @@ export const ConsoleHeader: React.FC = () => {
           {/* GeM Context Badge */}
           <div className="hidden sm:flex items-center gap-2 pr-4 border-r border-white/15">
             <img
-              src="/assets/gem-logo.png"
+              src={gemLogo}
               alt="Government e Marketplace"
               className="h-8 w-auto object-contain brightness-110"
               onError={(e) => {
-                // Fallback if image path differs
                 (e.target as HTMLElement).style.display = 'none';
               }}
             />
@@ -34,7 +35,7 @@ export const ConsoleHeader: React.FC = () => {
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-bidsure-deep border border-bidsure-cyan/40 p-1 flex items-center justify-center shadow-glass-intelligence">
               <img
-                src="/assets/bidsure-artwork.png"
+                src={bidsureArtwork}
                 alt="BidSure AI"
                 className="w-full h-full object-contain"
                 onError={(e) => {

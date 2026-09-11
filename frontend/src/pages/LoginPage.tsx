@@ -16,6 +16,8 @@ import {
 import { useAuth, RoleType, DEMO_PERSONAS } from '../context/AuthContext';
 import { GlassCard, Button } from '../components/ui';
 import { AmbientBackground } from '../components/layout/AmbientBackground';
+import gemLogo from '../assets/gem-logo.png';
+import bidsureArtwork from '../assets/bidsure-artwork.png';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -106,6 +108,30 @@ export const LoginPage: React.FC = () => {
       generateCaptcha();
     }
   }, [stage]);
+
+  // Quick direct login for instant evaluator access
+  const handleDirectLogin = async (r: RoleType) => {
+    setSelectedRole(r);
+    const persona = DEMO_PERSONAS[r];
+    setEmail(persona.email);
+    setPassword('Password@123');
+    setLoading(true);
+    setLoginError(null);
+    try {
+      await login(persona.email, 'Password@123', r);
+      navigate('/dashboard');
+    } catch (err: any) {
+      console.error(err);
+      setLoginError('Authentication failed. Please verify credentials with directory.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAutoFillCaptcha = () => {
+    setCaptchaInput(captchaCode);
+    setCaptchaError(false);
+  };
 
   // Handle Stage 1: Select Role
   const handleSelectRole = (r: RoleType) => {
@@ -209,7 +235,7 @@ export const LoginPage: React.FC = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
-              src="/assets/gem-logo.png"
+              src={gemLogo}
               alt="GeM"
               className="h-7 w-auto object-contain brightness-110"
               onError={(e) => ((e.target as HTMLElement).style.display = 'none')}
@@ -231,7 +257,7 @@ export const LoginPage: React.FC = () => {
           <div className="lg:col-span-5 space-y-6 text-left">
             <div className="relative w-40 h-40 mx-auto lg:mx-0 p-2 rounded-2xl bg-bidsure-deep/80 border border-bidsure-cyan/40 shadow-glass-intelligence">
               <img
-                src="/assets/bidsure-artwork.png"
+                src={bidsureArtwork}
                 alt="BidSure AI Gavel and Shield"
                 className="w-full h-full object-contain filter drop-shadow"
               />
@@ -286,6 +312,44 @@ export const LoginPage: React.FC = () => {
                     <p className="text-xs text-slate-500">
                       Choose your authorized government role to initialize role-isolated session.
                     </p>
+                  </div>
+
+                  {/* 1-Click Instant Demo Access */}
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200/80 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-bidsure-blue shrink-0 animate-pulse" />
+                      <div>
+                        <span className="text-xs font-bold text-slate-900 block">
+                          Instant Evaluator Access
+                        </span>
+                        <span className="text-[11px] text-slate-500 block">
+                          Skip 2FA simulation for immediate platform inspection:
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1.5 w-full sm:w-auto">
+                      <button
+                        type="button"
+                        onClick={() => handleDirectLogin('PROCUREMENT_OFFICER')}
+                        className="flex-1 sm:flex-none text-[11px] font-bold px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white shadow-sm transition-all cursor-pointer"
+                      >
+                        Officer
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDirectLogin('AUDITOR')}
+                        className="flex-1 sm:flex-none text-[11px] font-bold px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all cursor-pointer"
+                      >
+                        Auditor
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDirectLogin('ADMIN')}
+                        className="flex-1 sm:flex-none text-[11px] font-bold px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white shadow-sm transition-all cursor-pointer"
+                      >
+                        Admin
+                      </button>
+                    </div>
                   </div>
 
                   <div className="space-y-3">
@@ -419,15 +483,25 @@ export const LoginPage: React.FC = () => {
                         <span className="text-[11px] font-bold text-slate-700 uppercase font-mono">
                           Security Verification CAPTCHA
                         </span>
-                        <button
-                          type="button"
-                          onClick={generateCaptcha}
-                          className="text-[11px] text-bidsure-blue hover:text-blue-800 flex items-center gap-1 font-medium"
-                          title="Generate new image"
-                        >
-                          <RotateCcw className="w-3 h-3" />
-                          <span>Refresh</span>
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleAutoFillCaptcha}
+                            className="text-[10px] text-emerald-700 hover:text-emerald-800 font-bold bg-emerald-100/70 px-2 py-0.5 rounded border border-emerald-300 cursor-pointer"
+                            title="Auto-fill CAPTCHA for quick evaluation"
+                          >
+                            Auto-Fill
+                          </button>
+                          <button
+                            type="button"
+                            onClick={generateCaptcha}
+                            className="text-[11px] text-bidsure-blue hover:text-blue-800 flex items-center gap-1 font-medium cursor-pointer"
+                            title="Generate new image"
+                          >
+                            <RotateCcw className="w-3 h-3" />
+                            <span>Refresh</span>
+                          </button>
+                        </div>
                       </div>
 
                       <div className="flex items-center gap-3">
