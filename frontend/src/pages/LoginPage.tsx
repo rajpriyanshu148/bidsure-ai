@@ -1,6 +1,6 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, ShieldAlert, Cpu, Lock, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, Cpu, Lock } from 'lucide-react';
 import { useAuth, RoleType, DEMO_PERSONAS } from '../context/AuthContext';
 import gemLogo from '../assets/gem-logo.png';
 import bidsureArtwork from '../assets/bidsure-artwork.png';
@@ -180,23 +180,10 @@ export const LoginPage: React.FC = () => {
               ) : (
                 <>
                   <Lock className="w-3.5 h-3.5" />
-                  <span>Sign In as {DEMO_PERSONAS[selectedRole].fullName.split(',')[0]}</span>
+                  <span>Sign In</span>
                 </>
               )}
             </button>
-
-            {/* Persona Details Box */}
-            <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-left">
-              <div className="flex items-center gap-2 mb-1">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-xs font-bold text-slate-800">
-                  {DEMO_PERSONAS[selectedRole].fullName}
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-500 leading-snug">
-                {DEMO_PERSONAS[selectedRole].designation} • {DEMO_PERSONAS[selectedRole].department}
-              </p>
-            </div>
           </form>
         </div>
       </main>
