@@ -12,6 +12,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { tendersApi, reportsApi } from '../services/api';
+import { generateClientPdfDossier } from '../services/pdfExportService';
 import { Tender, Bidder } from '../types';
 import { StatusBadge, RiskBadge, Button, GlassCard } from '../components/ui';
 import { useAuth } from '../context/AuthContext';
@@ -66,8 +67,13 @@ export const ReportsPage: React.FC = () => {
       window.URL.revokeObjectURL(blobUrl);
       document.body.removeChild(a);
     } catch (err) {
-      console.error('Download error:', err);
-      window.open(reportsApi.downloadPdfUrl(bidderId), '_blank');
+      console.warn('[BidSure AI] Server-side PDF fetch failed or offline; generating client-side compliance dossier:', err);
+      const matchedBidder = bidders.find((b) => b.id === bidderId) || { id: bidderId, company_name: companyName };
+      const currentTender = tenders.find((t) => t.id === selectedTenderId);
+      generateClientPdfDossier({
+        bidder: matchedBidder,
+        tender: currentTender,
+      });
     } finally {
       setDownloadingId(null);
     }

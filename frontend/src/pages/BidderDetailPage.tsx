@@ -12,6 +12,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { biddersApi, documentsApi, reportsApi } from '../services/api';
+import { generateClientPdfDossier } from '../services/pdfExportService';
 import { Bidder, Document as BidderDoc, ComplianceResult, RiskScore, AIRecommendation } from '../types';
 import { RequirementList } from '../components/scrutiny/RequirementList';
 import { DocumentViewer } from '../components/scrutiny/DocumentViewer';
@@ -147,8 +148,14 @@ export const BidderDetailPage: React.FC = () => {
       a.click();
       a.remove();
     } catch (err) {
-      console.error('PDF download error:', err);
-      alert('Failed to generate PDF dossier. Ensure backend is running.');
+      console.warn('[BidSure AI] Server-side PDF fetch error; generating client-side compliance dossier:', err);
+      if (bidder) {
+        generateClientPdfDossier({
+          bidder,
+          complianceResults,
+          recommendationText: recommendation?.recommendation_text,
+        });
+      }
     }
   };
 
