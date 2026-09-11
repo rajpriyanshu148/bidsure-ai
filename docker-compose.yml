@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: bidsure_postgres
+    environment:
+      POSTGRES_USER: bidsure
+      POSTGRES_PASSWORD: bidsure_password_2026
+      POSTGRES_DB: bidsure_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bidsure -d bidsure_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: bidsure_backend
+    environment:
+      DATABASE_URL: postgresql://bidsure:bidsure_password_2026@postgres:5432/bidsure_db
+      JWT_SECRET: bidsure_ai_super_secret_jwt_key_sih2026_secure
+      LLM_PROVIDER: mock
+      STORAGE_PROVIDER: local
+      STORAGE_DIR: /app/storage
+      CORS_ORIGINS: http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - storage_data:/app/storage
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: bidsure_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  storage_data:
